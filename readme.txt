@@ -1,7 +1,7 @@
 Kristof Cseh
 University of Bristol
 Faculty of Engineering
-Department of Computer
+Department of Computer Science
 
 This readme is the manual to compile the program and describes the modules.
 
@@ -29,7 +29,11 @@ This is to render font. I downloaded a ttf file for this which is Courier.
 Install:
 sudo apt-get install libsdl2-ttf-dev
 
-To compile the project type make main in the terminal window.
+To compile the project type
+
+    make main
+
+in the terminal window.
 
 MODULES:
 
@@ -59,7 +63,7 @@ This module draws a scrollable text (with mouse wheel, mouse click and drag, arr
 
 font.c
 
-This module has function that we can use to load .ttf files and render texts.
+This module has functions that we can use to load .ttf files and render texts.
 
 buddha.c
 
@@ -81,12 +85,4 @@ complex.c
 
 This module is a basic multiprecision library (powered by MPFR) and this routine is used in both julia.c and mandel.c.
 
-
-
-
-
-
-
-
-
-
+/Note: in the program we can go back by clicking exit button or pressing <ENTER> or pressing <BACKSPACE>/
