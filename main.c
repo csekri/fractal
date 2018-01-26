@@ -24,7 +24,7 @@ int main(){
 //begin_initializations-------------------------------------------------
     setbuf(stdout, NULL);
     srand(time(NULL));
-    mpfr_set_default_prec(500);
+    mpfr_set_default_prec(600);
     int currentMenuItem = 0;
 
     display *d = malloc(sizeof(display));

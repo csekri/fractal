@@ -67,16 +67,16 @@ void mandelColorStriped(complex escape, long int i, int *r, int *g, int *b){
 		mpfr_clear(log_2);
 }
 
-void mandelColorSmooth(complex escape, long int i, int *r, int *g, int *b){
+void mandelColorSmooth(complex escape, long long int i, int *r, int *g, int *b){
 		CMod(&escape);
 		mpfr_log(escape.r, escape.r, MPFR_RNDD);
-		double esc = mpfr_get_ld(escape.r, MPFR_RNDD);
+		long double esc = mpfr_get_ld(escape.r, MPFR_RNDD);
 		esc = log(esc)/log(2);
-		long double smooth = i + 1 + esc;
+		long double smooth = i + 1 - esc;
 
-		*r = (int) ((sin(smooth / 107)) * 255);
-		*g = (int) ((sin(smooth / 103)) * 255);
-		*b = (int) ((cos(smooth / 100)) * 255);
+		*r = (int) ((sin(smooth / 107 + 3.6*3/2) + 1) * 127);
+		*g = (int) ((sin(smooth / 103 + 3.6*3/2) + 1) * 127);
+		*b = (int) ((cos(smooth / 100) + 1) * 127);
 }
 
 void zoomFunc(int mouse_x, int mouse_y, mpfr_t *midx, mpfr_t *midy,

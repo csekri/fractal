@@ -20,7 +20,7 @@ void mandelColorLayered(long int i, int *r, int *g, int *b);
 
 void mandelColorStriped(complex escape, long int i, int *r, int *g, int *b);
 
-void mandelColorSmooth(complex escape, long int i, int *r, int *g, int *b);
+void mandelColorSmooth(complex escape, long long int i, int *r, int *g, int *b);
 
 void zoomFunc(int mouse_x, int mouse_y, mpfr_t *midx, mpfr_t *midy,
 	 mpfr_t left, mpfr_t up, long double *zoom, bool *draw, bool isIn, zoomData zd);
