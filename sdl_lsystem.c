@@ -299,11 +299,13 @@ void initBoxs(ibox *boxs){
         boxs[i] = (ibox) { NOTHING, i, {130, 100 + 70 * i, 500, 50}, ' ', malloc(100)};
         strcpy(boxs[i].str, " ");
     }
-    strcpy(boxs[0].str, " 2");
-    strcpy(boxs[1].str, " 60");
-    strcpy(boxs[2].str, " A");
-    strcpy(boxs[3].str, " A=B+A+B");
-    strcpy(boxs[4].str, " B=A-B-A");
+    strcpy(boxs[0].str, " 1");
+    strcpy(boxs[1].str, " 36");
+    strcpy(boxs[2].str, " [B]++[B]++[B]++[B]++[B]");
+    strcpy(boxs[3].str, " A=C++D----B[-C----A]++");
+    strcpy(boxs[4].str, " B=+C--D[---A--B]+");
+    strcpy(boxs[5].str, " C=-A++B[+++C++D]-");
+    strcpy(boxs[6].str, " D=--C++++A[+D++++B]--B");
 }
 
 void deinitBoxs(ibox *boxs){
@@ -354,12 +356,13 @@ void drawLsystem(display *d, char **data, char *Angle, SDL_Texture **texture, in
       long double min_x = sta.pos.x;
       long double max_y = sta.pos.y;
       long double min_y = sta.pos.y;
+	long double unit = 0.1;
 
       for (long int i = 0; i < lenght; i++){
           if ('A' <= ls_str[i] && ls_str[i] <= 'F'){
-              move(&sta, 1);
+              move(&sta, unit);
           } else if ('G' <= ls_str[i] && ls_str[i] <= 'L'){
-              move(&sta, 1);
+              move(&sta, unit);
           } else if ('|' == ls_str[i]){
               rotation(&sta, 180);
           } else if (ls_str[i] == '+') rotation(&sta, angle);
@@ -381,7 +384,7 @@ void drawLsystem(display *d, char **data, char *Angle, SDL_Texture **texture, in
 
       long double dif_x = max_x - min_x;
       long double dif_y = max_y - min_y;
-      long double len = min(1 / dif_x * 1050, 1 / dif_y * 950) * 0.9;
+      long double len = min(1 / dif_x * 1050, 1 / dif_y * 950) * 0.9 * unit;
       sta.pos.x = 1175;
       sta.pos.y = 475;
       sta.angle = -90;
@@ -418,6 +421,7 @@ void drawLsystem(display *d, char **data, char *Angle, SDL_Texture **texture, in
          else if (ls_str[i] == '-') rotation(&sta, -angle);
          if (ls_str[i] == '[') push(bracket, sta);
          if (ls_str[i] == ']') sta = pop(bracket);
+	 if (i % 40 == 0){
          SDL_SetRenderTarget(d->renderer, NULL);
          SDL_RenderCopy(d->renderer, *texture, NULL, NULL);
          for (long int i = 0; i < 9; i++){
@@ -429,7 +433,7 @@ void drawLsystem(display *d, char **data, char *Angle, SDL_Texture **texture, in
          startButton(d->renderer);
 
          SDL_UpdateWindowSurface(d->window);
-         SDL_SetRenderTarget(d->renderer, NULL);
+         SDL_SetRenderTarget(d->renderer, NULL);}
          bool ok = false;
          while (SDL_PollEvent(&event)){
             if (event.type == SDL_QUIT) ok = true;
@@ -437,6 +441,18 @@ void drawLsystem(display *d, char **data, char *Angle, SDL_Texture **texture, in
          if (ok) break;
       }
     }
+SDL_SetRenderTarget(d->renderer, NULL);
+         SDL_RenderCopy(d->renderer, *texture, NULL, NULL);
+         for (long int i = 0; i < 9; i++){
+             inputBox(d->renderer, &boxs[i]);
+         }
+
+         drawBarSepLine(d->renderer);
+         drawLabels(d->renderer);
+         startButton(d->renderer);
+
+         SDL_UpdateWindowSurface(d->window);
+         SDL_SetRenderTarget(d->renderer, NULL);
     free(ls_str);
 }
 void lsystemMenu(display *d, int *changeState){
